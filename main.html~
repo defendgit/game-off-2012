@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>Clone: the search of forks</title>
+		<script type="text/javascript" src="main.js"></script>
+		<style type="text/css">
+			#content {
+				text-align: center;
+				width: 800px;
+				margin: auto;
+			}
+		</style>
+	</head>
+	<body onload="main()">
+		<div id=content>
+			<canvas id="can"></canvas>
+		</div>
+	</body>
+</html>
+
