@@ -2,6 +2,11 @@
 var width = 16;
 var height = 16;
 var spacing = 1;
+var xcells = 20;
+var ycells = 20;
+
+//Global game variables
+var gamegrid = new Array();
 
 
 function getCursorPosition(event) {
