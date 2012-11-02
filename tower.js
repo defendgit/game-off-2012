@@ -1,7 +1,8 @@
 //Object for tower
 //
 
-function Tower(name, range) {
+function Tower(id, name, range) {
+	this.id = id
 	this.name = name;
 	this.range = range;
 	this.connections = new Array();
