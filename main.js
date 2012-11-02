@@ -1,20 +1,34 @@
+//Define some variables that may change
+var width = 16;
+var height = 16;
+var spacing = 2;
+
+
 function getCursorPosition(event) {
 	//To cancel out padding, and relative to the element, use window.pageXOffset for relative to page
 	x  = event.pageX - document.getElementById("can").offsetLeft; 
 	y  = event.pageY - document.getElementById("can").offsetTop;
 		
-	alert (x + " " + y);
+	clickLocation = new Object();
+	clickLocation.xcell = Math.floor(x/(width+spacing));
+	clickLocation.ycell = Math.floor(y/(height+spacing));
+	clickLocation.x = x;
+	clickLocation.y = y;
+	return clickLocation;
+}
+
+function clickHandler(event) {
+	click = getCursorPosition(event);
+	alert(click.xcell + " " + click.ycell);
 	return;
 }
+
 
 function getKeypress(event) {
 	return;
 }
 
 function fillsquare(x, y, can) {
-	var width = 16;
-	var height = 16;
-	var spacing = 2;
 
 	can.fillStyle = "#ffffff";
 	can.fillRect(width*x+spacing*x, height*y+spacing*y, width, height);
@@ -28,7 +42,7 @@ function main() {
 	document.getElementById("can").width = 400;
 
 	//Add event listeners
-	document.getElementById("can").addEventListener("click", getCursorPosition, false);
+	document.getElementById("can").addEventListener("click", clickHandler, false);
 	document.getElementById("can").addEventListener("keypress", getKeypress, false);
 
 	c = document.getElementById("can").getContext("2d");
@@ -38,5 +52,10 @@ function main() {
 	fillsquare (5, 6, c);
 	fillsquare (6, 6, c);
 	fillsquare (6, 5, c);
+	for (i = 0; i < 30; i++) {
+		for (j = 0; j < 20; j++) {
+			fillsquare(i,j,c);
+		}
+	}
 
 }
