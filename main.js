@@ -1,7 +1,7 @@
 //Define some variables that may change
 var width = 16;
 var height = 16;
-var spacing = 2;
+var spacing = 1;
 
 
 function getCursorPosition(event) {
@@ -10,8 +10,8 @@ function getCursorPosition(event) {
 	y  = event.pageY - document.getElementById("can").offsetTop;
 		
 	clickLocation = new Object();
-	clickLocation.xcell = Math.floor(x/(width+spacing));
-	clickLocation.ycell = Math.floor(y/(height+spacing));
+	clickLocation.xcell = Math.floor(x/(width+2*(spacing)));
+	clickLocation.ycell = Math.floor(y/(height+2*(spacing)));
 	clickLocation.x = x;
 	clickLocation.y = y;
 	return clickLocation;
@@ -31,15 +31,15 @@ function getKeypress(event) {
 function fillsquare(x, y, can) {
 
 	can.fillStyle = "#ffffff";
-	can.fillRect(width*x+spacing*x, height*y+spacing*y, width, height);
+	can.fillRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
 	return;
 }
 
 
 function main() {
 	//Set width and height
-	document.getElementById("can").height = 300;
-	document.getElementById("can").width = 400;
+	document.getElementById("can").height = (height + 2*spacing) * 20;
+	document.getElementById("can").width = (width + 2*spacing) * 20;
 
 	//Add event listeners
 	document.getElementById("can").addEventListener("click", clickHandler, false);
