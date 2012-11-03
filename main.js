@@ -43,6 +43,12 @@ function fillsquare(x, y, can) {
 	return;
 }
 
+function gameLoop(can) {
+	document.getElementById("sidebar").innerHTML = "00000";
+	for (i = 0; i < towerarray.length; i++) {
+		towerarray[i].draw(can);
+	}
+}
 
 function main() {
 	//Set width and height
@@ -56,7 +62,7 @@ function main() {
 	c = document.getElementById("can").getContext("2d");
 	c.rect(00,00,1000,1000);
 	c.fillRect(0,0,1000,1000);
-	fillsquare (5, 5, c);
+	/*fillsquare (5, 5, c);
 	fillsquare (5, 6, c);
 	fillsquare (6, 6, c);
 	fillsquare (6, 5, c);
@@ -64,6 +70,8 @@ function main() {
 		for (j = 0; j < 20; j++) {
 			fillsquare(i,j,c);
 		}
-	}
+	}*/
+
+	var i = setInterval("gameLoop(c)", 30);
 
 }

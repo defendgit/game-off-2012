@@ -9,7 +9,20 @@ function Tower(id, x, y, name) {
 	this.connections = new Array();
 
 	//Properties
+	//Each tower should have polyshape/colour based on attributes/properties
 	//Should be dynamically (randomly) Generated with mutations happening in future
 	this.range = 0; //This should go in properties subobject
+	
+
+	//Functions 
+	this.draw = draw;
 	return this;
+}
+
+function draw(can) {
+	can.fillStyle = "#ffffff";
+	//can.fillRect(this.x, this.y, 1,1);
+	can.fillRect(width*this.x+spacing*this.x+spacing*(this.x+1), height*this.y+spacing*this.y+spacing*(this.y+1), width, height);
+	//alert("Drawn");
+	return;
 }
