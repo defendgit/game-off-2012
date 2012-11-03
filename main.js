@@ -6,7 +6,8 @@ var xcells = 20;
 var ycells = 20;
 
 //Global game variables
-var gamegrid = new Array();
+var towerarray = new Array();
+var enemyarray = new Array();
 
 
 function getCursorPosition(event) {
@@ -24,7 +25,9 @@ function getCursorPosition(event) {
 
 function clickHandler(event) {
 	click = getCursorPosition(event);
-	alert(click.xcell + " " + click.ycell);
+	//alert(click.xcell + " " + click.ycell);
+	towerarray.push(new Tower(Math.random(), click.xcell, click.ycell));
+	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
 	return;
 }
 
