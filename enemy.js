@@ -29,7 +29,7 @@ function enemyUpdate() {
 	
 
 	//Figure out if we have arrived at the target (this.pathcell+1)
-	if (this.cell.xcell == pathlist[this.pathcell+1][0] && this.cell.ycell == pathlist[this.pathcell+1][1]) {
+	if (this.x == getPxlFromCell(pathlist[this.pathcell+1][0], pathlist[this.pathcell+1][1])[0] && this.y == getPxlFromCell(pathlist[this.pathcell+1][0], pathlist[this.pathcell+1][1])[1]) {
 		//Enemy is there, so increment the this.pathcell pointer
 		this.pathcell += 1;
 	}

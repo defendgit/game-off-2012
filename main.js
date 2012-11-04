@@ -33,8 +33,8 @@ function getCellFromPxl(x, y) {
 	clickLocation = new Object();
 	clickLocation.xcell = Math.floor(x/(width+2*(spacing)));
 	clickLocation.ycell = Math.floor(y/(height+2*(spacing)));
-	clickLocation.x = x;
-	clickLocation.y = y;
+	//clickLocation.x = x;
+	//clickLocation.y = y;
 	return clickLocation;
 }
 
