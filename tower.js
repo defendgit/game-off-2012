@@ -1,6 +1,17 @@
 //Object for tower
 //
 
+//Tower Properties object
+function TowerProperties() {
+	this.range;
+	this.health;
+	this.damage;
+	this.color;
+	this.shape;
+	return this;
+}
+
+//Tower object
 function Tower(id, x, y, name) {
 	this.id = id
 	this.name = name;
@@ -26,3 +37,7 @@ function draw(can) {
 	//alert("Drawn");
 	return;
 }
+
+function randomize() {
+}
+	

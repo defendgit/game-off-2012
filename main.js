@@ -9,6 +9,22 @@ var ycells = 20;
 var towerarray = new Array();
 var enemyarray = new Array();
 
+var mousex = 0;
+var mousey = 0;
+
+function fillsquare(x, y, can) {
+	can.fillStyle = "#ffffff";
+	can.fillRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
+	return;
+}
+
+function drawSquare(x, y, can) {
+	can.fillStyle = "#ffffff";
+	can.fillRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
+	can.fillStyle = "#000000";
+	can.fillRect(width*x+spacing*x+spacing*(x+1)+1, height*y+spacing*y+spacing*(y+1)+1, width-2, height-2);
+	return;
+}
 
 function getCursorPosition(event) {
 	//To cancel out padding, and relative to the element, use window.pageXOffset for relative to page
@@ -31,20 +47,25 @@ function clickHandler(event) {
 	return;
 }
 
+function moveHandler(event) {
+	pos = getCursorPosition(event);
+	document.getElementById("output").innerHTML = pos.xcell + ", " + pos.ycell;
+	mousex = pos.xcell;
+	mousey = pos.ycell;
+}
+
 
 function getKeypress(event) {
 	return;
 }
 
-function fillsquare(x, y, can) {
-
-	can.fillStyle = "#ffffff";
-	can.fillRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
-	return;
-}
 
 function gameLoop(can) {
-	document.getElementById("sidebar").innerHTML = "00000";
+	//document.getElementById("sidebar").innerHTML = "00000";
+	//Clear screen
+	can.fillStyle = "#000000";
+	can.fillRect(0,0,1000,1000);
+	drawSquare(mousex, mousey, can);
 	for (i = 0; i < towerarray.length; i++) {
 		towerarray[i].draw(can);
 	}
@@ -57,6 +78,7 @@ function main() {
 
 	//Add event listeners
 	document.getElementById("can").addEventListener("click", clickHandler, false);
+	document.getElementById("can").addEventListener("mousemove", moveHandler, false);
 	document.getElementById("can").addEventListener("keypress", getKeypress, false);
 
 	c = document.getElementById("can").getContext("2d");
