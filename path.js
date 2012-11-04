@@ -101,12 +101,25 @@ function generatePath() {
 
 function genPathRec(currsq) {
 	//Generate path recursively
+	
+	//Check if it is the edge 
+	if (isEdge(currsq)) {
+		//It is! Search over. 
+		//Push final edge value and begin return true going up the chain
+		alert("Edged!" + currsq);
+		alert(pathlist);
+		pathlist.push(currsq); 
+		return true;
+	}
+
 	//alert("Called with: " + currsq);
 	var dir = Math.floor(Math.random()*3); //Use randomn for initial guess of propsq
 	var tries = 0; //How many times has the following do/while loop been done
 	var propsq = [];
+	var popretry; //The next square was popped, flag to try again; indicates a retry is needed for propsq
 	do {
 		//Keep generating a square until proposed square does not cross path or make path go "back on itself"
+		popretry = false; 
 		tries += 1;
 		if (dir == 0) {
 			propsq = [currsq[0]+1,currsq[1]];
@@ -121,15 +134,6 @@ function genPathRec(currsq) {
 		}
 		//alert("propsq" + propsq);
 
-		//Check if it is the edge 
-		if (isEdge(propsq)) {
-			//It is! Search over. 
-			//Pop final edge value and begin return true going up the chain
-			alert("Edged!" + propsq);
-			alert(pathlist);
-			pathlist.pop(propsq); 
-			return true;
-		}
 		//alert("Testing " + propsq + "\nsqEx()=" + squareExists(propsq) + "\nbadNe()=" + badNeighbours(propsq) + "\nisNeg()=" +isNegative(propsq));
 		if (!squareExists(propsq) && !badNeighbours(propsq) && !isNegative(propsq)) {
 			//This square is good
@@ -144,12 +148,13 @@ function genPathRec(currsq) {
 				//That path is bad, so lets undo that last push
 				pathlist.pop(); 
 				debugpath.push("popped - tries" + tries);
+				popretry = true;
 			}
 		}
 
 		
 		dir = (dir + 1) % 4; //Don't waste cycles repeating over same numbers and just go to next
-	} while ((squareExists(propsq) || badNeighbours(propsq) || isNegative(propsq)) && tries <= 4);
+	} while ((squareExists(propsq) || badNeighbours(propsq) || isNegative(propsq) || popretry) && tries <= 4);
 	return false; //This path direction will not be okay, back up one level and try again.
 	
 }
