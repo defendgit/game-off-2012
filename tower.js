@@ -27,6 +27,16 @@ function Tower(id, x, y, name) {
 	this.properties.damage = Math.floor(Math.random() * 30) + 1;
 	this.properties.health = Math.floor(Math.random() * 100) + 10;
 
+	//Appearance properties
+	//!!!!!!!!!!!!!!!!!!!!
+	//WARNING: properties must be under 255!
+	this.properties.color = "#" + this.properties.range.toString(16) + this.properties.damage.toString(16) + this.properties.health.toString(16);
+	while (this.properties.color.length < 7) {
+		//Patch a 0 on the end if colour is not long enough for hex colour string (eg. #47238)
+		this.properties.color += "0";
+	}
+	//alert(this.properties.color);
+
 	//Randomize properties
 
 	//Functions 
@@ -36,7 +46,7 @@ function Tower(id, x, y, name) {
 }
 
 function draw(can) {
-	can.fillStyle = "#ffffff";
+	can.fillStyle = this.properties.color;
 	//can.fillRect(this.x, this.y, 1,1);
 	can.fillRect(width*this.x+spacing*this.x+spacing*(this.x+1), height*this.y+spacing*this.y+spacing*(this.y+1), width, height);
 	//alert("Drawn");

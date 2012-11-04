@@ -38,6 +38,11 @@ function getCellFromPxl(x, y) {
 	return clickLocation;
 }
 
+function getPxlFromCell(cellx, celly) {
+	x = width*cellx+spacing*cellx+spacing*(cellx+1);
+	y = height*celly+spacing*celly+spacing*(celly+1);
+	return [x,y];
+}
 
 function getCursorPosition(event) {
 	//To cancel out padding, and relative to the element, use window.pageXOffset for relative to page
@@ -65,7 +70,6 @@ function clickHandler(event) {
 		if (click.xcell == towerarray[i].x && click.ycell == towerarray[i].y) {
 			//User clicked on tower
 			selectedtower = towerarray[i].id;
-			alert("Tower clicked");
 			break;
 		} else {
 			//No tower selected;
@@ -78,7 +82,6 @@ function clickHandler(event) {
 		if (click.xcell == pathlist[i][0] && click.ycell == pathlist[i][1]) {
 
 			//User clicked on path
-			alert("Clicked path");
 			selectedpath = [click.xcell, click.ycell];
 			break;
 		} else {
@@ -107,7 +110,9 @@ function clickHandler(event) {
 
 function moveHandler(event) {
 	pos = getCursorPosition(event);
-	document.getElementById("output").innerHTML = pos.xcell + ", " + pos.ycell;
+	pxl = getPxlFromCell(pos.xcell, pos.ycell);
+	document.getElementById("output").innerHTML = pos.xcell + ", " + pos.ycell + "\n";
+	document.getElementById("output").innerHTML += pxl[0] + ", " + pxl[1];
 	mousex = pos.xcell;
 	mousey = pos.ycell;
 }
@@ -128,6 +133,11 @@ function gameLoop(can) {
 	for (i = 0; i < towerarray.length; i++) {
 		towerarray[i].draw(can);
 	}
+	for (i = 0; i < enemylist.length; i++) {
+		enemylist[i].update();
+		enemylist[i].draw(can);
+	}
+	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
 }
 
 function main() {
