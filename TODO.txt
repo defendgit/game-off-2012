@@ -1,0 +1,4 @@
+TODO
+
+Wrap generate path function in another function that will continually call it if the path length is short
+
