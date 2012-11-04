@@ -3,6 +3,7 @@
 		<title>Github Game Off entry</title>
 		<script type="text/javascript" src="main.js"></script>
 		<script type="text/javascript" src="tower.js"></script>
+		<script type="text/javascript" src="path.js"></script>
 		<style type="text/css">
 			#content {
 				text-align: center;
@@ -27,6 +28,11 @@
 			<p>
 				<a href='http://github.com/systemtwo/game-off-2012'>Github page </a>
 				<textarea id="output">Output</textarea>
+				<br />
+				<textarea id="outputsec">SecondaryOutput</textarea>
+				<input type="submit" value="Generate path" onclick="genPathRec(pathlist[0])">
+				<input type="submit" value="Generate andDraw path" onclick="drawPath()">
+				<input type="submit" value="ShowDebug" onclick="alertDebug()">
 			</p>
 		</div>
 	</body>

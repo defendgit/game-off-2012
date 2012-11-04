@@ -12,7 +12,7 @@ var enemyarray = new Array();
 var mousex = 0;
 var mousey = 0;
 
-function fillsquare(x, y, can) {
+function fillSquare(x, y, can) {
 	can.fillStyle = "#ffffff";
 	can.fillRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
 	return;
@@ -64,7 +64,7 @@ function gameLoop(can) {
 	//document.getElementById("sidebar").innerHTML = "00000";
 	//Clear screen
 	can.fillStyle = "#000000";
-	can.fillRect(0,0,1000,1000);
+	//can.fillRect(0,0,1000,1000);
 	drawSquare(mousex, mousey, can);
 	for (i = 0; i < towerarray.length; i++) {
 		towerarray[i].draw(can);
@@ -84,15 +84,6 @@ function main() {
 	c = document.getElementById("can").getContext("2d");
 	c.rect(00,00,1000,1000);
 	c.fillRect(0,0,1000,1000);
-	/*fillsquare (5, 5, c);
-	fillsquare (5, 6, c);
-	fillsquare (6, 6, c);
-	fillsquare (6, 5, c);
-	for (i = 0; i < 30; i++) {
-		for (j = 0; j < 20; j++) {
-			fillsquare(i,j,c);
-		}
-	}*/
 
 	var i = setInterval("gameLoop(c)", 30);
 
