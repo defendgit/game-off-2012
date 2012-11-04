@@ -12,8 +12,11 @@ var enemyarray = new Array();
 var mousex = 0;
 var mousey = 0;
 
-function fillSquare(x, y, can) {
-	can.fillStyle = "#ffffff";
+function fillSquare(x, y, can, fillstyle) {
+	if (typeof(fillstyle) === 'undefined') {
+		fillstyle = "#ffffff";
+	}
+	can.fillStyle = fillstyle;
 	can.fillRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
 	return;
 }
@@ -25,6 +28,16 @@ function drawSquare(x, y, can) {
 	can.fillRect(width*x+spacing*x+spacing*(x+1)+1, height*y+spacing*y+spacing*(y+1)+1, width-2, height-2);
 	return;
 }
+
+function getCellFromPxl(x, y) {
+	clickLocation = new Object();
+	clickLocation.xcell = Math.floor(x/(width+2*(spacing)));
+	clickLocation.ycell = Math.floor(y/(height+2*(spacing)));
+	clickLocation.x = x;
+	clickLocation.y = y;
+	return clickLocation;
+}
+
 
 function getCursorPosition(event) {
 	//To cancel out padding, and relative to the element, use window.pageXOffset for relative to page
@@ -42,8 +55,53 @@ function getCursorPosition(event) {
 function clickHandler(event) {
 	click = getCursorPosition(event);
 	//alert(click.xcell + " " + click.ycell);
-	towerarray.push(new Tower(Math.random(), click.xcell, click.ycell));
-	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
+	
+
+	//See what user clicked on
+	//See if user clicked on tower
+	var i;
+	var selectedtower = -1; // -1 signifies no tower selected
+	for (i = 0; i < towerarray.length; i++) {
+		if (click.xcell == towerarray[i].x && click.ycell == towerarray[i].y) {
+			//User clicked on tower
+			selectedtower = towerarray[i].id;
+			alert("Tower clicked");
+			break;
+		} else {
+			//No tower selected;
+		}
+	} 
+
+	//See if user clicked on path
+	var selectedpath = [];
+	for (i = 0; i < pathlist.length; i++) {
+		if (click.xcell == pathlist[i][0] && click.ycell == pathlist[i][1]) {
+
+			//User clicked on path
+			alert("Clicked path");
+			selectedpath = [click.xcell, click.ycell];
+			break;
+		} else {
+			//Path not selected
+			selectedpath = [-1,-1];
+		}
+	}
+
+
+	//Add tower if nothing selected
+	if (selectedtower == -1	&& selectedpath[0] == -1) {
+		var towerid;
+		//Find new tower id
+		if (towerarray.length == 0) {
+			//No towers exist
+			towerid = 0;
+		} else {
+			towerid = towerarray[towerarray.length-1].id + 1;
+		}
+		//Get id of next tower by incrementing last tower's id by 1
+		towerarray.push(new Tower(towerid, click.xcell, click.ycell));
+		document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
+	}
 	return;
 }
 
@@ -64,7 +122,8 @@ function gameLoop(can) {
 	//document.getElementById("sidebar").innerHTML = "00000";
 	//Clear screen
 	can.fillStyle = "#000000";
-	//can.fillRect(0,0,1000,1000);
+	can.fillRect(0,0,1000,1000);
+	drawPath();
 	drawSquare(mousex, mousey, can);
 	for (i = 0; i < towerarray.length; i++) {
 		towerarray[i].draw(can);

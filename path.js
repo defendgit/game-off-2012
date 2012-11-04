@@ -120,7 +120,7 @@ function drawPath() {
 	//alert("drawing");
 	var canv = document.getElementById("can").getContext("2d");
 	for (k = 0; k < pathlist.length; k++) {
-		fillSquare(pathlist[k][0], pathlist[k][1], canv);
+		fillSquare(pathlist[k][0], pathlist[k][1], canv, "#ff0000");
 	}
 }
 

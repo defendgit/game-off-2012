@@ -3,11 +3,11 @@
 
 //Tower Properties object
 function TowerProperties() {
-	this.range;
-	this.health;
-	this.damage;
-	this.color;
-	this.shape;
+	this.range = 0;
+	this.health = 0;
+	this.damage = 0;
+	this.color = 0;
+	this.shape = 0;
 	return this;
 }
 
@@ -22,11 +22,16 @@ function Tower(id, x, y, name) {
 	//Properties
 	//Each tower should have polyshape/colour based on attributes/properties
 	//Should be dynamically (randomly) Generated with mutations happening in future
-	this.range = 0; //This should go in properties subobject
-	
+	this.properties = new Object();
+	this.properties.range = Math.floor(Math.random() * 200) + 50;
+	this.properties.damage = Math.floor(Math.random() * 30) + 1;
+	this.properties.health = Math.floor(Math.random() * 100) + 10;
+
+	//Randomize properties
 
 	//Functions 
 	this.draw = draw;
+
 	return this;
 }
 
@@ -38,6 +43,14 @@ function draw(can) {
 	return;
 }
 
-function randomize() {
+function makeDrawProperties() {
+	//Generate colour and shape based on other tower properties
 }
+
+function randomize(prop) {
+	prop.range = Math.floor(Math.random() * 200) + 50;
+	prop.damage = Math.floor(Math.random() * 30) + 1;
+	prop.health = Math.floor(Math.random() * 100) + 10;
+}
+
 	
