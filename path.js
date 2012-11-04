@@ -99,6 +99,8 @@ function generatePath() {
 
 }
 
+
+
 function genPathRec(currsq) {
 	//Generate path recursively
 	
@@ -106,8 +108,8 @@ function genPathRec(currsq) {
 	if (isEdge(currsq)) {
 		//It is! Search over. 
 		//Push final edge value and begin return true going up the chain
-		alert("Edged!" + currsq);
-		alert(pathlist);
+		//alert("Edged!" + currsq);
+		//alert(pathlist);
 		pathlist.push(currsq); 
 		return true;
 	}
@@ -171,3 +173,22 @@ function alertDebug() {
 	alert(debugpath);
 	return;
 }
+
+function genPathWrapper() {
+	//Function to make a random path that starts on random square on top or left edge
+	//Also makes sure that the path is at least certain length
+	do {
+		//Make a random start point on edge
+		var randedge = Math.floor(Math.random() * 2);
+		if (randedge == 0) {
+			pathlist = [[Math.floor(Math.random() * Math.floor((xcells/2))), 0]];
+		} else {
+			pathlist = [[0, Math.floor(Math.random() * Math.floor(ycells/2))]];
+		}
+
+		//Call the pathgen function
+		genPathRec(pathlist[0]);
+	} while (pathlist.length < 50);
+	return;
+}
+
