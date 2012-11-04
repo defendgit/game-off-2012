@@ -56,51 +56,6 @@ function isEdge(propsq) {
 	}
 }
 
-	
-function generatePath() {
-	pathlist.push([0,0]);
-	var dir = Math.floor(Math.random()*5);
-	var propsq; //Proposed next square
-	var tries = 0;
-	while (pathlist[pathlist.length-1][0] != width-1 || pathlist[pathlist.length-1][1] != height-1) {
-	//while (pathlist.length < 10) {
-		//Continue generating the path if the last element is not on the right or bottom edge of the map
-		
-		//Find last square in list and call it "Current square" as the basis of the decisions for the next square
-		currsq = pathlist[pathlist.length-1];
-		
-		//Randomly propose an ajacent square for the next square
-		//Directions
-		//0 = right
-		//1 = down
-		//2 = left
-		//3 = up
-		dir = Math.floor(Math.random()*3); //Use randomn for initial guess of propsq
-		do {
-			//alert(dir);
-			//Keep generating a square until proposed square does not cross path or make path go "back on itself"
-			if (dir == 0) {
-				propsq = [currsq[0]+1,currsq[1]];
-			} else if (dir == 1) {
-				propsq = [currsq[0],currsq[1]+1];
-			} else if (dir == 2) {
-				propsq = [currsq[0]-1,currsq[1]];
-			} else if (dir == 3) {
-				propsq = [currsq[0],currsq[1]-1];
-			} else {
-				alert ("Error: Path gen rand failed");
-			}
-			dir = (dir + 1) % 4; //Don't waste cycles repeating over same numbers and just go to next
-		} while (squareExists(propsq) || badNeighbours(propsq) || isNegative(propsq));
-		pathlist.push(propsq);
-	}
-	document.getElementById("outputsec").innerHTML = pathlist;
-	return;
-
-}
-
-
-
 function genPathRec(currsq) {
 	//Generate path recursively
 	
