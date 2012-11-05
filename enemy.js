@@ -2,6 +2,7 @@ var enemylist = new Array();
 function Enemy() {
 	//Enemy object
 	this.health = 100;
+	this.totalhealth = this.health;
 	this.speed = 1;
 	this.pathcell = 0; //Index of pathlist cell that enemy is on
 	this.x = getPxlFromCell(pathlist[this.pathcell][0], pathlist[this.pathcell][1])[0] ; //Pixel coordinates
@@ -22,6 +23,7 @@ function enemyUpdate() {
 	//Are we on last cell of path?
 	if (this.pathcell == (pathlist.length-1)) {
 		alert ("You lose!");
+		clearInterval(runInterval);
 	}
 
 	//Find current cell that we are on
@@ -53,12 +55,12 @@ function enemyUpdate() {
 		//Go up
 		this.y -= 1;
 	} else {
-		alert ("Enemy moving error!");
+		//alert ("Enemy moving error!");
 	}
 }
 
 function enemyDraw(can) {
-	can.fillStyle = "#098765";
+	can.fillStyle = "#09" + Math.floor((this.health/this.totalhealth)*255).toString(16) + "65";
 	can.fillRect(this.x, this.y, 10,10);
 	return;
 }

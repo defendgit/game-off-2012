@@ -12,6 +12,11 @@ var enemyarray = new Array();
 var mousex = 0;
 var mousey = 0;
 
+var runInterval;
+
+var money = 1000;
+var score = 0;
+
 function fillSquare(x, y, can, fillstyle) {
 	if (typeof(fillstyle) === 'undefined') {
 		fillstyle = "#ffffff";
@@ -92,7 +97,7 @@ function clickHandler(event) {
 
 
 	//Add tower if nothing selected
-	if (selectedtower == -1	&& selectedpath[0] == -1) {
+	if (selectedtower == -1	&& selectedpath[0] == -1 && money >= 100) {
 		var towerid;
 		//Find new tower id
 		if (towerarray.length == 0) {
@@ -104,6 +109,7 @@ function clickHandler(event) {
 		//Get id of next tower by incrementing last tower's id by 1
 		towerarray.push(new Tower(towerid, click.xcell, click.ycell));
 		document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
+		money -= 100;
 	}
 	return;
 }
@@ -131,15 +137,27 @@ function gameLoop(can) {
 
 	//Draw objects to canvas
 	drawPath();
-	drawSquare(mousex, mousey, can);
 	for (i = 0; i < towerarray.length; i++) {
 		towerarray[i].draw(can);
+		towerarray[i].search(can);
 	}
 	for (i = 0; i < enemylist.length; i++) {
-		enemylist[i].update();
 		enemylist[i].draw(can);
+		enemylist[i].update();
+		if (enemylist[i].health <= 0) {
+			//Remove dead enemy
+			enemylist.splice(i,1);
+			
+			//Get dead enemy money
+			money += 10;
+
+			//Add score
+			score += 1;
+		}
 	}
+	drawSquare(mousex, mousey, can);
 	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
+	document.getElementById("money").value = "Money: " + money;
 }
 
 function main() {
@@ -156,6 +174,7 @@ function main() {
 	c.rect(00,00,1000,1000);
 	c.fillRect(0,0,1000,1000);
 
-	var i = setInterval("gameLoop(c)", 30);
+	runInterval = setInterval("gameLoop(c)", 30);
+	genPathWrapper();
 
 }
