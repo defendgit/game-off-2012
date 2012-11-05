@@ -1,4 +1,10 @@
 TODO
 
-Wrap generate path function in another function that will continually call it if the path length is short
+Make towers shoot
+Internet connections
+Draw range of towers on mouseover
+Floating tooltip on tower info of tower properties
+Mutation function
+Add money and score
+[DONE]Wrap generate path function in another function that will continually call it if the path length is short
 

@@ -30,7 +30,7 @@ function drawSquare(x, y, can) {
 }
 
 function getCellFromPxl(x, y) {
-	clickLocation = new Object();
+	var clickLocation = new Object();
 	clickLocation.xcell = Math.floor(x/(width+2*(spacing)));
 	clickLocation.ycell = Math.floor(y/(height+2*(spacing)));
 	//clickLocation.x = x;
@@ -39,8 +39,8 @@ function getCellFromPxl(x, y) {
 }
 
 function getPxlFromCell(cellx, celly) {
-	x = width*cellx+spacing*cellx+spacing*(cellx+1);
-	y = height*celly+spacing*celly+spacing*(celly+1);
+	var x = width*cellx+spacing*cellx+spacing*(cellx+1);
+	var y = height*celly+spacing*celly+spacing*(celly+1);
 	return [x,y];
 }
 
