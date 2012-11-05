@@ -1,11 +1,13 @@
 TODO
 
-Make towers shoot
 Internet connections
 Draw range of towers on mouseover
 Floating tooltip on tower info of tower properties
 Mutation function
-Add money and score
-Enemy change colour with health
+Different enemies
+
 [DONE]Wrap generate path function in another function that will continually call it if the path length is short
+[DONE]Add money and score
+[DONE]Enemy change colour with health
+[DONE]Make towers shoot
 
