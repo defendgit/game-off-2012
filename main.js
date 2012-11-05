@@ -46,10 +46,10 @@ function getPxlFromCell(cellx, celly) {
 
 function getCursorPosition(event) {
 	//To cancel out padding, and relative to the element, use window.pageXOffset for relative to page
-	x  = event.pageX - document.getElementById("can").offsetLeft; 
-	y  = event.pageY - document.getElementById("can").offsetTop;
+	var x  = event.pageX - document.getElementById("can").offsetLeft; 
+	var y  = event.pageY - document.getElementById("can").offsetTop;
 		
-	clickLocation = new Object();
+	var clickLocation = new Object();
 	clickLocation.xcell = Math.floor(x/(width+2*(spacing)));
 	clickLocation.ycell = Math.floor(y/(height+2*(spacing)));
 	clickLocation.x = x;
@@ -58,7 +58,7 @@ function getCursorPosition(event) {
 }
 
 function clickHandler(event) {
-	click = getCursorPosition(event);
+	var click = getCursorPosition(event);
 	//alert(click.xcell + " " + click.ycell);
 	
 
@@ -109,8 +109,8 @@ function clickHandler(event) {
 }
 
 function moveHandler(event) {
-	pos = getCursorPosition(event);
-	pxl = getPxlFromCell(pos.xcell, pos.ycell);
+	var pos = getCursorPosition(event);
+	var pxl = getPxlFromCell(pos.xcell, pos.ycell);
 	document.getElementById("output").innerHTML = pos.xcell + ", " + pos.ycell + "\n";
 	document.getElementById("output").innerHTML += pxl[0] + ", " + pxl[1];
 	mousex = pos.xcell;
@@ -128,6 +128,8 @@ function gameLoop(can) {
 	//Clear screen
 	can.fillStyle = "#000000";
 	can.fillRect(0,0,1000,1000);
+
+	//Draw objects to canvas
 	drawPath();
 	drawSquare(mousex, mousey, can);
 	for (i = 0; i < towerarray.length; i++) {
