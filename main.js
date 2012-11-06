@@ -140,6 +140,7 @@ function gameLoop(can) {
 	for (i = 0; i < towerarray.length; i++) {
 		towerarray[i].draw(can);
 		towerarray[i].search(can);
+		towerarray[i].mutate();
 	}
 	for (i = 0; i < enemylist.length; i++) {
 		enemylist[i].draw(can);
@@ -158,6 +159,7 @@ function gameLoop(can) {
 	drawSquare(mousex, mousey, can);
 	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
 	document.getElementById("money").value = "Money: " + money;
+	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
 }
 
 function main() {

@@ -18,7 +18,6 @@ function Tower(id, x, y, name) {
 	this.x = x;
 	this.y = y
 	this.connections = new Array();
-	this.reloadcounter = 
 
 	//Properties
 	//Each tower should have polyshape/colour based on attributes/properties
@@ -28,8 +27,11 @@ function Tower(id, x, y, name) {
 	this.properties.damage = Math.floor(Math.random() * 30) + 1;
 	this.properties.health = Math.floor(Math.random() * 100) + 10;
 	this.properties.reload = Math.floor(Math.random() * 50) + 50;
+	this.properties.mutate = Math.floor(Math.random() * 50) + 50; //How often the tower mutates (duration in frames)
+	this.properties.mutatestrength = Math.floor(Math.random() * 3)+1; //How much the tower can mutate at most (Tower can still mutate with less than this value), also note that max change in values will be (this value-1)
 
 	this.reloadcounter = this.properties.reload;
+	this.mutatecounter = this.properties.mutate;
 	//Appearance properties
 	//!!!!!!!!!!!!!!!!!!!!
 	//WARNING: properties must be under 255!
@@ -45,6 +47,8 @@ function Tower(id, x, y, name) {
 	//Functions 
 	this.draw = towerDraw;
 	this.search = towerSearch;
+	this.drawRange = towerDrawRange;
+	this.mutate = towerMutate;
 
 	return this;
 }
@@ -54,6 +58,21 @@ function towerDraw(can) {
 	//can.fillRect(this.x, this.y, 1,1);
 	can.fillRect(width*this.x+spacing*this.x+spacing*(this.x+1), height*this.y+spacing*this.y+spacing*(this.y+1), width, height);
 	//alert("Drawn");
+	this.drawRange(can);
+	return;
+}
+
+function towerDrawRange(can) {
+	//alert("Drawing range circle");
+	//var pos = getPxlFromCell(this.x, this.y);
+	//can.fillStyle = "#00ff00";	
+	//document.getElementById("outputtri").innerHTML = width*this.x+spacing*this.x+spacing*(this.x+1)+(width/2) + "\n" +  (height*this.y+spacing*this.y+spacing*(this.y+1)+(height/2));
+	can.beginPath();
+	//can.arc(width*this.x+spacing*this.x+spacing*(this.x+1)+(width/2), height*this.y+spacing*this.y+spacing*(this.y+1)+(height/2), this.range, 0, 2*Math.PI, false);
+	can.arc(width*this.x+spacing*this.x+spacing*(this.x+1)+(width/2), height*this.y+spacing*this.y+spacing*(this.y+1)+(height/2), this.properties.range, 0, 2*Math.PI, false);
+	can.linewidth = 20;
+	can.strokeStyle = "#00ffff";
+	can.stroke();
 	return;
 }
 
@@ -98,3 +117,32 @@ function towerSearch(can) {
 		}
 	}
 }
+
+function towerMutate() {
+	if (this.mutatecounter <= 0) {
+		//Mutate
+		this.properties.range += Math.floor(Math.random()*this.properties.mutatestrength*2)-this.properties.mutatestrength+1;
+		this.properties.damage += Math.floor(Math.random()*this.properties.mutatestrength*2)-this.properties.mutatestrength+1;
+		this.properties.reload += Math.floor(Math.random()*this.properties.mutatestrength*2)-this.properties.mutatestrength+1;
+
+		//Make sure towers are at least barely functional
+		if (this.properties.range <= 10) {
+			this.properties.range = 10;
+		}
+		if (this.properties.damage <= 1) {
+			this.properties.damage = 1;
+		}
+		if (this.properties.reload >= 200) {
+			this.properties.range = 200;
+		}
+
+
+		//Reset mutatecounter
+		this.mutatecounter = this.properties.mutate;
+	}
+	
+	//decrement mutate counter
+	this.mutatecounter -= 1;
+	return;
+}
+
