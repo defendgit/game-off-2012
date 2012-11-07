@@ -3,6 +3,7 @@ var debugpath = [[0,0,]];
 function squareExists(propsq) {
 	//Find out if a proposed square exists (generatePath) 
 	//alert(propsq);
+	var i;
 	for (i = 0; i < pathlist.length; i++) {
 		if ((pathlist[i][0] == propsq[0]) && (pathlist[i][1] == propsq[1])) {
 			//document.getElementById("outputsec").innerHTML += propsq + "is in list";
@@ -119,6 +120,7 @@ function genPathRec(currsq) {
 function drawPath() {
 	//alert("drawing");
 	var canv = document.getElementById("can").getContext("2d");
+	var k;
 	for (k = 0; k < pathlist.length; k++) {
 		fillSquare(pathlist[k][0], pathlist[k][1], canv, "#ffffff");
 	}
