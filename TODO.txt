@@ -1,13 +1,15 @@
 TODO
 
 Internet connections
-Draw range of towers on mouseover
+Draw range of towers on mouseover (Change colour)
 Floating tooltip on tower info of tower properties
-Mutation function
 Different enemies
+Have the path squares sequentially "drop" or "grow" in an introduction
+Fix bad path problem
 
 [DONE]Wrap generate path function in another function that will continually call it if the path length is short
 [DONE]Add money and score
 [DONE]Enemy change colour with health
 [DONE]Make towers shoot
+[DONE]Mutation function
 
