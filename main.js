@@ -17,6 +17,8 @@ var runInterval;
 var money = 1000;
 var score = 0;
 
+var selectedtower = -1; // -1 signifies no tower selected
+
 function fillSquare(x, y, can, fillstyle) {
 	if (typeof(fillstyle) === 'undefined') {
 		fillstyle = "#ffffff";
@@ -26,8 +28,11 @@ function fillSquare(x, y, can, fillstyle) {
 	return;
 }
 
-function drawSquare(x, y, can) {
-	can.strokeStyle = "#00ff00";
+function drawSquare(x, y, can, style) {
+	if (typeof(style) === 'undefined') {
+		can.strokeStyle = "#00ff00";
+	}
+	can.strokeStyle = style;
 	can.strokeRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
 	//can.fillStyle = "#000000";
 	//can.fillRect(width*x+spacing*x+spacing*(x+1)+1, height*y+spacing*y+spacing*(y+1)+1, width-2, height-2);
@@ -70,11 +75,12 @@ function clickHandler(event) {
 	//See what user clicked on
 	//See if user clicked on tower
 	var i;
-	var selectedtower = -1; // -1 signifies no tower selected
+	var clickedtower = false; //Bool for if user clicked on tower
 	for (i = 0; i < towerarray.length; i++) {
 		if (click.xcell == towerarray[i].x && click.ycell == towerarray[i].y) {
 			//User clicked on tower
-			selectedtower = towerarray[i].id;
+			selectedtower = i; //Put in the list index
+			clickedtower = true;
 			break;
 		} else {
 			//No tower selected;
@@ -97,7 +103,7 @@ function clickHandler(event) {
 
 
 	//Add tower if nothing selected
-	if (selectedtower == -1	&& selectedpath[0] == -1 && money >= 100) {
+	if (clickedtower == false && selectedpath[0] == -1 && money >= 100) {
 		var towerid;
 		//Find new tower id
 		if (towerarray.length == 0) {
@@ -141,6 +147,9 @@ function gameLoop(can) {
 		towerarray[i].draw(can);
 		towerarray[i].search(can);
 		towerarray[i].mutate();
+		if (i == selectedtower) {
+			drawSquare(towerarray[i].x, towerarray[i].y, can, "#ff0000");
+		}
 	}
 	for (i = 0; i < enemylist.length; i++) {
 		enemylist[i].draw(can);
@@ -157,9 +166,11 @@ function gameLoop(can) {
 		}
 	}
 	drawSquare(mousex, mousey, can);
+
 	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
 	document.getElementById("money").value = "Money: " + money;
 	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
+	document.getElementById("towerinfo").innerHTML = JSON.stringify(towerarray[selectedtower]);
         enemyRate *= 1.0005;
     if (Math.random() > 1 - enemyRate) {
         addEnemy();

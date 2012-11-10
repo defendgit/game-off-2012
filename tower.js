@@ -15,8 +15,8 @@ function TowerProperties() {
 function Tower(id, x, y, name) {
 	this.id = id
 	this.name = name;
-	this.x = x;
-	this.y = y
+	this.x = x;//X cell
+	this.y = y;//y cell
 	this.connections = new Array();
 
 	//Properties
