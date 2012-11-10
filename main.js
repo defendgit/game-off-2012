@@ -98,7 +98,7 @@ var mouse = new (function () {
 		//Add tower if nothing selected
 		if (clickedtower == false && selectedpath == undefined && money >= 100) {
 			towerarray.push(new Tower(click.xcell, click.ycell));
-			document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
+// 			document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
 			money -= 100;
 		}
 		return;
@@ -151,9 +151,9 @@ function gameLoop(can) {
 	}
 	drawSquare(mouse.pos.x, mouse.pos.y, can);
 
-	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
-	document.getElementById("money").value = "Money: " + money;
-	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
+// 	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
+	document.getElementById("money").innerHTML = "Money: " + money;
+// 	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
 	document.getElementById("towerinfo").innerHTML = JSON.stringify(towerarray[selectedtower]);
 	
 	enemyRate *= 1.0005;
