@@ -1,6 +1,6 @@
 //Define some variables that may change
-var width = 16;
-var height = 16;
+var width = 16; //Cell width in pxls
+var height = 16; //Cell height in pxls
 var spacing = 1;
 var xcells = 20;
 var ycells = 20;
@@ -8,6 +8,7 @@ var ycells = 20;
 //Global game variables
 var towerarray = new Array();
 var enemyarray = new Array();
+var gamegrid = [];
 
 var runInterval;
 
@@ -27,7 +28,7 @@ function fillSquare(x, y, can, fillstyle) {
 
 function drawSquare(x, y, can, style) {
 	if (typeof(style) === 'undefined') {
-		can.strokeStyle = "#00ff00";
+		style = "#00ff00";
 	}
 	can.strokeStyle = style;
 	can.strokeRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
