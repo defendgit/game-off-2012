@@ -8,6 +8,7 @@ var ycells = 20;
 //Global game variables
 var towerarray = new Array();
 var enemyarray = new Array();
+var gamegrid = [];
 
 var runInterval;
 

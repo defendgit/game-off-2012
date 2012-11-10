@@ -129,6 +129,20 @@ function alertDebug() {
 	return;
 }
 
+function pathToGrid() {
+	var grid = [];
+	var i;
+	for (i = 0; i < xcells; i++) {
+		grid[i] = []; //Make each "column" an array for rows
+	}
+	for (i = 0; i < pathlist.length; i++) {
+		grid[pathlist[i][0]][pathlist[i][1]] = "path"+i;
+	}
+	alert (grid);
+	return grid;
+}
+	
+
 function genPathWrapper() {
 	//Function to make a random path that starts on random square on top or left edge
 	//Also makes sure that the path is at least certain length
@@ -144,6 +158,7 @@ function genPathWrapper() {
 		//Call the pathgen function
 		genPathRec(pathlist[0]);
 	} while (pathlist.length < 50);
+	gamegrid = pathToGrid();
 	return;
 }
 
