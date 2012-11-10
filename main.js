@@ -27,10 +27,10 @@ function fillSquare(x, y, can, fillstyle) {
 }
 
 function drawSquare(x, y, can) {
-	can.fillStyle = "#ffffff";
-	can.fillRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
-	can.fillStyle = "#000000";
-	can.fillRect(width*x+spacing*x+spacing*(x+1)+1, height*y+spacing*y+spacing*(y+1)+1, width-2, height-2);
+	can.strokeStyle = "#00ff00";
+	can.strokeRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
+	//can.fillStyle = "#000000";
+	//can.fillRect(width*x+spacing*x+spacing*(x+1)+1, height*y+spacing*y+spacing*(y+1)+1, width-2, height-2);
 	return;
 }
 
