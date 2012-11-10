@@ -67,68 +67,55 @@ function getCursorPosition(event) {
 	return clickLocation;
 }
 
-function clickHandler(event) {
-	var click = getCursorPosition(event);
-	//alert(click.xcell + " " + click.ycell);
-	
+var mouse = new (function () {
+	this.click = function click(event) {
+		var click = getCursorPosition(event);
+		
+		var i;
+		var clickedtower = false;
+		for (i = 0; i < towerarray.length; i++) {
+			if (click.xcell == towerarray[i].x && click.ycell == towerarray[i].y) {
+				//User clicked on tower
+				selectedtower = i;
+				clickedtower = true;
+				break;
+			}
+		} 
 
-	//See what user clicked on
-	//See if user clicked on tower
-	var i;
-	var clickedtower = false; //Bool for if user clicked on tower
-	for (i = 0; i < towerarray.length; i++) {
-		if (click.xcell == towerarray[i].x && click.ycell == towerarray[i].y) {
-			//User clicked on tower
-			selectedtower = i; //Put in the list index
-			clickedtower = true;
-			break;
-		} else {
-			//No tower selected;
+		//See if user clicked on path
+		var selectedpath = [];
+		for (i = 0; i < pathlist.length; i++) {
+			if (click.xcell == pathlist[i][0] && click.ycell == pathlist[i][1]) {
+
+				//User clicked on path
+				selectedpath = [click.xcell, click.ycell];
+				break;
+			} else {
+				//Path not selected
+				selectedpath = [-1,-1];
+			}
 		}
-	} 
 
-	//See if user clicked on path
-	var selectedpath = [];
-	for (i = 0; i < pathlist.length; i++) {
-		if (click.xcell == pathlist[i][0] && click.ycell == pathlist[i][1]) {
 
-			//User clicked on path
-			selectedpath = [click.xcell, click.ycell];
-			break;
-		} else {
-			//Path not selected
-			selectedpath = [-1,-1];
+		//Add tower if nothing selected
+		if (clickedtower == false && selectedpath[0] == -1 && money >= 100) {
+			towerarray.push(new Tower(click.xcell, click.ycell));
+			document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
+			money -= 100;
 		}
+		return;
 	}
 
-
-	//Add tower if nothing selected
-	if (clickedtower == false && selectedpath[0] == -1 && money >= 100) {
-		var towerid;
-		//Find new tower id
-		if (towerarray.length == 0) {
-			//No towers exist
-			towerid = 0;
-		} else {
-			towerid = towerarray[towerarray.length-1].id + 1;
-		}
-		//Get id of next tower by incrementing last tower's id by 1
-		towerarray.push(new Tower(towerid, click.xcell, click.ycell));
-		document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
-		money -= 100;
+	this.move = function move(event) {
+		var pos = getCursorPosition(event);
+		var pxl = getPxlFromCell(pos.xcell, pos.ycell);
+		document.getElementById("output").innerHTML = pos.xcell + ", " + pos.ycell + "\n";
+		document.getElementById("output").innerHTML += pxl[0] + ", " + pxl[1];
+		mousex = pos.xcell;
+		mousey = pos.ycell;
 	}
-	return;
-}
 
-function moveHandler(event) {
-	var pos = getCursorPosition(event);
-	var pxl = getPxlFromCell(pos.xcell, pos.ycell);
-	document.getElementById("output").innerHTML = pos.xcell + ", " + pos.ycell + "\n";
-	document.getElementById("output").innerHTML += pxl[0] + ", " + pxl[1];
-	mousex = pos.xcell;
-	mousey = pos.ycell;
-}
-
+});
 
 function getKeypress(event) {
 	return;
@@ -183,8 +170,8 @@ function main() {
 	document.getElementById("can").width = (width + 2*spacing) * 20;
 
 	//Add event listeners
-	document.getElementById("can").addEventListener("click", clickHandler, false);
-	document.getElementById("can").addEventListener("mousemove", moveHandler, false);
+	document.getElementById("can").addEventListener("click", mouse.click, false);
+	document.getElementById("can").addEventListener("mousemove", mouse.move, false);
 	document.getElementById("can").addEventListener("keypress", getKeypress, false);
 
 	c = document.getElementById("can").getContext("2d");
