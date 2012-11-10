@@ -128,7 +128,7 @@ function getKeypress(event) {
 	return;
 }
 
-
+var enemyRate = 0.02;
 function gameLoop(can) {
 	//document.getElementById("sidebar").innerHTML = "00000";
 	//Clear screen
@@ -160,6 +160,10 @@ function gameLoop(can) {
 	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
 	document.getElementById("money").value = "Money: " + money;
 	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
+        enemyRate *= 1.0005;
+    if (Math.random() > 1 - enemyRate) {
+        addEnemy();
+    }
 }
 
 function main() {
