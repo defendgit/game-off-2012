@@ -9,9 +9,6 @@ var ycells = 20;
 var towerarray = new Array();
 var enemyarray = new Array();
 
-var mousex = 0;
-var mousey = 0;
-
 var runInterval;
 
 var money = 1000;
@@ -54,24 +51,30 @@ function getPxlFromCell(cellx, celly) {
 	return [x,y];
 }
 
-function getCursorPosition(event) {
-	//To cancel out padding, and relative to the element, use window.pageXOffset for relative to page
-	var x  = event.pageX - document.getElementById("can").offsetLeft; 
-	var y  = event.pageY - document.getElementById("can").offsetTop;
-		
-	var clickLocation = new Object();
-	clickLocation.xcell = Math.floor(x/(width+2*(spacing)));
-	clickLocation.ycell = Math.floor(y/(height+2*(spacing)));
-	clickLocation.x = x;
-	clickLocation.y = y;
-	return clickLocation;
-}
-
 var mouse = new (function () {
-	this.click = function click(event) {
-		var click = getCursorPosition(event);
+	this.pos = {};
+	
+	function findPos(event) {
+		// Make mouse coordinates relative to canvas
+		var x = event.pageX - document.getElementById("can").offsetLeft; 
+		var y = event.pageY - document.getElementById("can").offsetTop;
 		
+		return {
+			xcell: Math.floor(x / (width + 2*spacing)),
+			ycell: Math.floor(y / (height + 2*spacing)),
+			x: x,
+			y: y,
+		};
+	}
+	
+	this.down = function down(event) {
+		
+	}
+	this.click = function click(event) {
+		var click = findPos(event);
 		var i;
+		
+		// This is only necessary until we build a grid.
 		var clickedtower = false;
 		for (i = 0; i < towerarray.length; i++) {
 			if (click.xcell == towerarray[i].x && click.ycell == towerarray[i].y) {
@@ -83,22 +86,17 @@ var mouse = new (function () {
 		} 
 
 		//See if user clicked on path
-		var selectedpath = [];
+		var selectedpath;
 		for (i = 0; i < pathlist.length; i++) {
 			if (click.xcell == pathlist[i][0] && click.ycell == pathlist[i][1]) {
-
-				//User clicked on path
-				selectedpath = [click.xcell, click.ycell];
+				selectedpath = pathlist[i];
 				break;
-			} else {
-				//Path not selected
-				selectedpath = [-1,-1];
 			}
 		}
 
 
 		//Add tower if nothing selected
-		if (clickedtower == false && selectedpath[0] == -1 && money >= 100) {
+		if (clickedtower == false && selectedpath == undefined && money >= 100) {
 			towerarray.push(new Tower(click.xcell, click.ycell));
 			document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
 			money -= 100;
@@ -107,12 +105,11 @@ var mouse = new (function () {
 	}
 
 	this.move = function move(event) {
-		var pos = getCursorPosition(event);
-		var pxl = getPxlFromCell(pos.xcell, pos.ycell);
-		document.getElementById("output").innerHTML = pos.xcell + ", " + pos.ycell + "\n";
-		document.getElementById("output").innerHTML += pxl[0] + ", " + pxl[1];
-		mousex = pos.xcell;
-		mousey = pos.ycell;
+		this.pos = findPos(event);
+		var pos = this.pos;
+		document.getElementById("output").innerHTML =
+			pos.xcell + ", " + pos.ycell + "\n"
+			+ pos.x + ", " + pos.y;
 	}
 
 });
@@ -152,16 +149,17 @@ function gameLoop(can) {
 			score += 1;
 		}
 	}
-	drawSquare(mousex, mousey, can);
+	drawSquare(mouse.pos.x, mouse.pos.y, can);
 
 	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
 	document.getElementById("money").value = "Money: " + money;
 	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
 	document.getElementById("towerinfo").innerHTML = JSON.stringify(towerarray[selectedtower]);
-        enemyRate *= 1.0005;
-    if (Math.random() > 1 - enemyRate) {
-        addEnemy();
-    }
+	
+	enemyRate *= 1.0005;
+	if (Math.random() > 1 - enemyRate) {
+		addEnemy();
+	}
 }
 
 function main() {

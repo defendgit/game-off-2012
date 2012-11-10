@@ -38,7 +38,7 @@ function badNeighbours(sq) {
 	}
 }
 
-function isNegative (propsq) {
+function isNegative(propsq) {
 	//Is square past top or left edges?
 	if ((propsq[0] < 0) || (propsq[1] < 0)) {
 		return true;

@@ -32,14 +32,6 @@ function Tower(x, y, name) {
 
 	this.reloadcounter = this.properties.reload;
 	this.mutatecounter = this.properties.mutate;
-	//Appearance properties
-	//!!!!!!!!!!!!!!!!!!!!
-	//WARNING: properties must be under 255!
-	this.properties.color = "#" + this.properties.range.toString(16) + this.properties.damage.toString(16) + this.properties.health.toString(16);
-	while (this.properties.color.length < 7) {
-		//Patch a 0 on the end if colour is not long enough for hex colour string (eg. #47238)
-		this.properties.color += "0";
-	}
 	//alert(this.properties.color);
 
 	//Randomize properties
@@ -54,7 +46,12 @@ function Tower(x, y, name) {
 	return this;
 }
 
+function hexPair(num) {
+	return Math.min(Math.max(num, 16), 255).toString(16);
+}
+
 function towerDraw(can) {
+	this.properties.color = "#" + hexPair(255 - this.properties.health) + hexPair(this.properties.range) + hexPair(this.properties.damage);
 	can.fillStyle = this.properties.color;
 	//can.fillRect(this.x, this.y, 1,1);
 	can.fillRect(width*this.x+spacing*this.x+spacing*(this.x+1), height*this.y+spacing*this.y+spacing*(this.y+1), width, height);
@@ -148,8 +145,11 @@ function towerMutate() {
 }
 
 function towerUpgrade() {
-	this.properties.damage += 20;
-	this.properties.reload -= 20;
+	if (money > 100) {
+		this.properties.damage *= 2;
+		this.properties.reload /= 2;
+		money -= 100;
+	}
 	return;
 }
 
