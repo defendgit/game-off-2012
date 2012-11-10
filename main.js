@@ -31,7 +31,7 @@ function drawSquare(x, y, can, style) {
 		style = "#00ff00";
 	}
 	can.strokeStyle = style;
-	can.strokeRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
+	can.strokeRect(width*x + spacing*(2*x + 1), height*y + spacing*(2*y + 1), width, height);
 	//can.fillStyle = "#000000";
 	//can.fillRect(width*x+spacing*x+spacing*(x+1)+1, height*y+spacing*y+spacing*(y+1)+1, width-2, height-2);
 	return;
@@ -99,7 +99,7 @@ var mouse = new (function () {
 		//Add tower if nothing selected
 		if (clickedtower == false && selectedpath == undefined && money >= 100) {
 			towerarray.push(new Tower(click.xcell, click.ycell));
-			document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
+// 			document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
 			money -= 100;
 		}
 		return;
@@ -150,11 +150,12 @@ function gameLoop(can) {
 			score += 1;
 		}
 	}
+	console.log(mouse.pos);
 	drawSquare(mouse.pos.xcell, mouse.pos.ycell, can, "#00ff00");
 
-	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
-	document.getElementById("money").value = "Money: " + money;
-	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
+// 	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
+	document.getElementById("money").innerHTML = "Money: " + money;
+// 	document.getElementById("sidebar").innerHTML = JSON.stringify(towerarray);
 	document.getElementById("towerinfo").innerHTML = JSON.stringify(towerarray[selectedtower]);
 	
 	enemyRate *= 1.0005;
@@ -169,8 +170,8 @@ function main() {
 	document.getElementById("can").width = (width + 2*spacing) * 20;
 
 	//Add event listeners
-	document.getElementById("can").addEventListener("click", mouse.click, false);
-	document.getElementById("can").addEventListener("mousemove", mouse.move, false);
+	document.getElementById("can").addEventListener("click", mouse.click.bind(mouse), false);
+	document.getElementById("can").addEventListener("mousemove", mouse.move.bind(mouse), false);
 	document.getElementById("can").addEventListener("keypress", getKeypress, false);
 
 	c = document.getElementById("can").getContext("2d");
