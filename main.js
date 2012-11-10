@@ -31,7 +31,7 @@ function drawSquare(x, y, can, style) {
 		style = "#00ff00";
 	}
 	can.strokeStyle = style;
-	can.strokeRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
+	can.strokeRect(width*x + spacing*(2*x + 1), height*y + spacing*(2*y + 1), width, height);
 	//can.fillStyle = "#000000";
 	//can.fillRect(width*x+spacing*x+spacing*(x+1)+1, height*y+spacing*y+spacing*(y+1)+1, width-2, height-2);
 	return;
@@ -150,7 +150,8 @@ function gameLoop(can) {
 			score += 1;
 		}
 	}
-	drawSquare(mouse.pos.x, mouse.pos.y, can);
+	console.log(mouse.pos);
+	drawSquare(mouse.pos.xcell, mouse.pos.ycell, can);
 
 // 	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
 	document.getElementById("money").innerHTML = "Money: " + money;
@@ -169,8 +170,8 @@ function main() {
 	document.getElementById("can").width = (width + 2*spacing) * 20;
 
 	//Add event listeners
-	document.getElementById("can").addEventListener("click", mouse.click, false);
-	document.getElementById("can").addEventListener("mousemove", mouse.move, false);
+	document.getElementById("can").addEventListener("click", mouse.click.bind(mouse), false);
+	document.getElementById("can").addEventListener("mousemove", mouse.move.bind(mouse), false);
 	document.getElementById("can").addEventListener("keypress", getKeypress, false);
 
 	c = document.getElementById("can").getContext("2d");
