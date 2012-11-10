@@ -30,7 +30,7 @@ function fillSquare(x, y, can, fillstyle) {
 
 function drawSquare(x, y, can, style) {
 	if (typeof(style) === 'undefined') {
-		can.strokeStyle = "#00ff00";
+		style = "#00ff00";
 	}
 	can.strokeStyle = style;
 	can.strokeRect(width*x+spacing*x+spacing*(x+1), height*y+spacing*y+spacing*(y+1), width, height);
