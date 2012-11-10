@@ -1,6 +1,6 @@
 //Define some variables that may change
-var width = 16;
-var height = 16;
+var width = 16; //Cell width in pxls
+var height = 16; //Cell height in pxls
 var spacing = 1;
 var xcells = 20;
 var ycells = 20;
