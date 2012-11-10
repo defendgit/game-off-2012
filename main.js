@@ -150,7 +150,7 @@ function gameLoop(can) {
 			score += 1;
 		}
 	}
-	drawSquare(mouse.pos.x, mouse.pos.y, can);
+	drawSquare(mouse.pos.xcell, mouse.pos.ycell, can, "#00ff00");
 
 	document.getElementById("underbar").innerHTML = JSON.stringify(enemylist);
 	document.getElementById("money").value = "Money: " + money;
