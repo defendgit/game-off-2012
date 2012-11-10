@@ -49,6 +49,7 @@ function Tower(id, x, y, name) {
 	this.search = towerSearch;
 	this.drawRange = towerDrawRange;
 	this.mutate = towerMutate;
+	this.upgrade = towerUpgrade;
 
 	return this;
 }
@@ -146,3 +147,12 @@ function towerMutate() {
 	return;
 }
 
+function towerUpgrade() {
+	this.properties.damage += 20;
+	this.properties.reload -= 20;
+	return;
+}
+
+function upgradeTower() {
+	towerarray[selectedtower].upgrade();
+}
