@@ -12,8 +12,7 @@ function TowerProperties() {
 }
 
 //Tower object
-function Tower(id, x, y, name) {
-	this.id = id
+function Tower(x, y, name) {
 	this.name = name;
 	this.x = x;//X cell
 	this.y = y;//y cell
@@ -22,13 +21,14 @@ function Tower(id, x, y, name) {
 	//Properties
 	//Each tower should have polyshape/colour based on attributes/properties
 	//Should be dynamically (randomly) Generated with mutations happening in future
-	this.properties = new Object();
-	this.properties.range = Math.floor(Math.random() * 100) + 50;
-	this.properties.damage = Math.floor(Math.random() * 30) + 1;
-	this.properties.health = Math.floor(Math.random() * 100) + 10;
-	this.properties.reload = Math.floor(Math.random() * 50) + 50;
-	this.properties.mutate = Math.floor(Math.random() * 50) + 50; //How often the tower mutates (duration in frames)
-	this.properties.mutatestrength = Math.floor(Math.random() * 3)+1; //How much the tower can mutate at most (Tower can still mutate with less than this value), also note that max change in values will be (this value-1)
+	this.properties = {
+		range: Math.floor(Math.random() * 100) + 50,
+		damage: Math.floor(Math.random() * 30) + 1,
+		health: Math.floor(Math.random() * 100) + 10,
+		reload: Math.floor(Math.random() * 50) + 50,
+		mutate: Math.floor(Math.random() * 50) + 50, //How often the tower mutates (duration in frames)
+		mutatestrength: Math.floor(Math.random() * 3)+1, //How much the tower can mutate at most (Tower can still mutate with less than this value), also note that max change in values will be (this value-1)
+	};
 
 	this.reloadcounter = this.properties.reload;
 	this.mutatecounter = this.properties.mutate;
