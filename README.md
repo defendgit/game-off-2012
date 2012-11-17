@@ -14,6 +14,8 @@ You have the entire month of November to create a **web-based** game *loosely* b
 * pushing
 * pulling
 
+
+
 What do we mean by **loosely** based on these concepts? We literally mean, *loosely* based. Some examples might be a FPS where you throw forks at water balloons, an educational game about DNA cloning, or perhaps a platformer where you push and pull objects.
 
 Your game. Your rules. You can participate as an individual or as a team. You're encouraged to use open source libraries, frameworks, graphics, and sounds.
